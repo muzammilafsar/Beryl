@@ -1,0 +1,108 @@
+ls 
+ls -l     #detail list
+ls -a     # hidden files
+ls  -lt   # sort by time modification
+ls  -l -h #display size in human readable form 
+ls -r     #reverse sort  order
+ls -S     # sort by size
+
+
+cd                   #move to home director
+cd "directory name"  #move to folder
+cd ..                #previous directory
+pwd                  #get current directory
+mkdir "directoryname" #create directory
+
+cat file_name        # show content of file
+cat file1 file 2     # content of multiple file
+cat filename -n      # show line numbers
+cat >filename        #create file
+cat file1>file2      # redirect std output of file1 to file2
+cat file1 file2 file3 > file4      # redirect std output of file1 file2 file3 to file4
+cat file1>>file2     # append content of file2 by file 1	
+ 
+more filenmae        # show content of file
+head filename        # show first 10 line only
+tail filename        # show last 10 files
+
+
+rm file_name		#remove file
+rm  -f file_name	#remove file forcefully
+rm -r dir_name 		#remove directory
+rm -rf dir_name 	#remove directory forcefully
+
+cp file1 file2          # copy content of file1 to file 2
+cp -r dir1 dir2 	#Copy dir1 to dir2;create dir2 if not present
+
+mv file1 file2		#Rename or move file1 to file2,if file2 is an existing directory
+
+ps			# show all current working processes
+top 			#display all running process
+kill pid 		# kill the process with given process id
+killall proc		# kll all the process named proc
+
+
+
+#chmod for permission
+    u is for user,
+    g is for group,
+    and o is for others.
+
+Following are the symbolic representation of three different permissions:
+
+    r is for read permission,
+    w is for write permission,
+    x is for execute permission.
+
+chmod u+x filename	 #give execute permission to user
+chmod u+xrw file_name 	 # give multiple permission to user
+chmod u- x filename      # remove permission 	
+chmod a+x filename       # give permission to all
+
+
+directory structure
+
+tree  			#display structure of current directory
+tree /etc/               #display structure of directory etc
+tree id /etc/		# display only directory	
+
+#vi editor commands
+
+vi filename 	#opens file or create fiel
+vi -R filename  #open file in readonly mode of use " $view filenamw   "
+
+:q to quit
+:w to save
+:wq to save and quit
+:w filename to save file as different name
+
+k
+Moves the cursor up one line
+ 	
+
+j
+Moves the cursor down one line
+3 	
+
+h
+
+Moves the cursor to the left one character position
+4 	
+
+l
+
+Moves the cursor to the right one character position
+
+copy file from one computer to another
+
+scp -v filename Username@ipaddress:directory 
+
+
+
+#ifconfig
+
+ifconfig
+ifconfig eth0 #for specific connectiomn
+sudo ifconfig eth0 up
+sudo ifconfig eth1 down
+
