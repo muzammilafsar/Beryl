@@ -1,21 +1,21 @@
 git init               			    # initialze git reposetory
-git status				    # check status of repository
+git status				    #check status of repository
 git add FIlename 	                    # add file to repository
 git add * 				    # add all files to repository
 git add '*.txt' 	 	            # add all txt files to repo
 git commit -m "changes has been made"       # commit changes,files move to stating area
 git log                                     # history about all commits
 git remote add origin https://github.com/try-git/try_git.git # remote to add local repo to github server
-git push -u origin master                   # push commit to github server master branch
+git push -u origin master                   #push commit to github server master branch
 git pull origin master                      # get latest push
 git diff HEAD                               # get differnce from last commit HEAD 
-git reset file_name                         # remove file from repo->unstageonly
-git checkout -- octocat.txt                 # move back to last commit when octocat was deleted
+git reset file_name                         #remove file from repo->unstageonly
+git checkout -- octocat.txt                 #move back to last commit when octocat was deleted
 git branch branch_name                      # create new bracnh
-git checkout bracnh_name		    # switch branch
+git checkout bracnh_name		    #switch branch
 git rm file_name			    # remove file from disk and staging area
 git merge branch_name                       # merge the current branch with the branch metioned
-git branch -d branch_name                   # delete branch
+git branch -d branch_name                   #delete branch
 
 
 
