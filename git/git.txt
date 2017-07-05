@@ -17,6 +17,6 @@ git rm file_name			    # remove file from disk and staging area
 git merge branch_name                       # merge the current branch with the branch metioned
 git branch -d branch_name                   # delete branch
 
-
+git new command
 
 
