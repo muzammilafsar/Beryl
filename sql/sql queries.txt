@@ -1,0 +1,149 @@
+CREATE DATABASE LIBRARY;			#CREATE NEW DB
+
+#DELETE DATABASE
+DROP DATABASE LIBRARY;
+
+
+###############################################################
+#CREATE NEW TABLE
+CREATE TABLE BOOKS(	
+ID INT PRIMARY KEY,
+NAME VARCHAR );
+
+
+create table company3 
+as (select * from company1 );
+
+create table company3 
+as (select * from company1 where 1=2);
+
+
+
+CREATE TABLE COMPANY1(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL    CHECK(SALARY > 0)
+);
+
+CREATE TABLE DEPARTMENT1(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      references COMPANY1(ID)
+);
+###############################################################
+
+
+#DELETE ALL RECORDS FROM TABLE
+TRUNCATE TABLE BOOKS;
+
+#CHANGE EXSISTING TABLE
+
+#ADD NEW COLUMN
+ALTER TABLE BOOKS
+ADD AUTHOR VARCHAR NOT NULL DEFAULT 'MUZZU';
+
+#DELETE COLUMN
+ALTER TABLE BOOKS
+DROP COLUMN AUTHOR ;
+
+alter table department1
+drop constraint department1_emp_id_fkey;
+
+#CHANGE DATATYPE OF COLUMN
+ALTER TABLE BOOKS
+ALTER COLUMN AUTHOR TYPE CHAR(100);
+
+#MAKE COLUMN NOT NULL
+
+ALTER TABLE BOOKS
+ALTER COLUMN ID SET NOT NULL;
+
+#CHANGE CONSTRAINT TO UNIQUE
+ALTER TABLE BOOKS
+ADD CONSTRAINT UNIQUEID UNIQUE(ID)
+#################################################################
+#insert records in table 
+
+insert into books values(1,'gameofthrones','aaloo');
+
+insert into books values(1,'gameofthrones','aaloo'),(2,'vampd','asa');
+
+insert into books(id,name,author)
+values(4,'new','tester');
+
+########################################################
+select * from books;
+select id,author from books
+select * from books  where name='new';
+select * from beryl where age>22;
+select * frselect * from beryl where name like '%u';
+select * from beryl where age in (22,28,20);
+select * from beryl where age not in (22,28,20);
+select * from beryl where age between 23 and 24;
+select age from beryl where age>(select age from beryl where salary>10000);
+select * from beryl where age>22 and salary>10000
+# select * from beryl where age>22 or salary>10000;
+##########################################################
+
+update beryl
+set name='abdus' where name='shan';
+update beryl 
+set name='abdus';
+
+###########################################################
+
+delete from beryl where age=22;
+delete from beryl where id=1;
+
+########################################################
+select * from beryl where name like 'sh%';
+select * from beryl where name like '%sh%';
+select * from beryl where name like 'sh%';
+select * from beryl where name like '___n';
+select * from beryl where salary::text like '8%';
+select * from beryl limit 2;
+select * from beryl limit 2 offset 2;
+select * from beryl order by name desc;
+select * from beryl order by name ;
+
+select  sum(salary), salary from beryl group by salary;
+
+
+with abc as(
+select id , name from beryl)
+select * from abc;
+select name from beryl group by name having count(name)>1
+;
+
+
+#############################################################
+
+
+
+Joins
+#################
+
+cross join
+select emp_id, name,dept from company1 cross join department;
+
+
+inner join
+select emp_id, name ,dept from company1 inner join department on  company1.id=department.emp_id;
+
+left outer join
+
+SELECT EMP_ID, NAME, DEPT FROM COMPANY1 LEFT OUTER JOIN DEPARTMENT
+   ON COMPANY1.ID = DEPARTMENT.EMP_ID;
+
+SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+   ON COMPANY.ID = DEPARTMENT.EMP_ID
+   UNION ALL
+      SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+         ON COMPANY.ID = DEPARTMENT.EMP_ID;
+
+
+########################################################################
+select * from company1 where ID in (select id from company1 where salary>=30000);
+

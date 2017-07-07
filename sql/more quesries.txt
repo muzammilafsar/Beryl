@@ -1,0 +1,35 @@
+create table shelf(
+id int primary key,
+floor int );
+
+
+
+
+create table book_details(
+id int primary key,
+title varchar(50),
+author varchar(50),
+pub_year char(4),
+no_copies int,
+no_available int check(no_available<=no_copies),
+shelf_id int references shelf(id));
+
+
+
+
+create table borrow(
+mem_id int references member(id),
+book_id int references book_details(id),
+date_of_issue date,
+date_of_return date);
+
+
+create table member(
+id int primary key,
+name varchar(20),
+age int ,    
+phone varchar(13),
+n_issueable int,
+n_issued int);
+
+
