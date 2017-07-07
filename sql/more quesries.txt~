@@ -68,6 +68,10 @@ add column cat_id int references category(id);
 
 update book_details  set cat_id=1 where title like 'hea%';
 
+select * from book_details as b left outer join category on b.cat_id=category.id;
+
+select title,author,pub_year,category.name as cat from book_details as b left outer join category on b.cat_id=category.id;
+
 
 
 

@@ -72,6 +72,748 @@ select * from book_details as b left outer join category on b.cat_id=category.id
 
 select title,author,pub_year,category.name as cat from book_details as b left outer join category on b.cat_id=category.id;
 
+select m.id,m.name, m.phone, b.title, b.author  from member as m  inner join borrow as br on br.mem_id=m.id join book_details as b on b.id=br.book_id;
+ id |   name   |   phone    |      title       |    author     
+----+----------+------------+------------------+---------------
+  1 | muzammil | 8802868625 | let us c         | someone
+  5 | abcd     | 1452654875 | let us c         | someone
+  3 | moto     | 1426784512 | head first java  | ketthy sierra
+  3 | moto     | 1426784512 | yellow wallpaper | muzm
 
+khushbu@namit:~$ sudo service postgresql restart
+sudo: unable to resolve host namit
+[sudo] password for khushbu: 
+khushbu@namit:~$ psql -U postgres
+psql: FATAL:  Peer authentication failed for user "postgres"
+khushbu@namit:~$ psql -U postgres
+psql: FATAL:  Peer authentication failed for user "postgres"
+khushbu@namit:~$ sudo -su postgres
+sudo: unable to resolve host namit
+postgres@namit:~$ psql
+psql (9.6.3)
+Type "help" for help.
+
+postgres=# \d
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | books | table | postgres
+(1 row)
+
+postgres=# \c
+You are now connected to database "postgres" as user "postgres".
+postgres=# \c library
+You are now connected to database "library" as user "postgres".
+library=# \d
+            List of relations
+ Schema |    Name     | Type  |  Owner   
+--------+-------------+-------+----------
+ public | beryl       | table | postgres
+ public | books       | table | postgres
+ public | company1    | table | postgres
+ public | company2    | table | postgres
+ public | company3    | table | postgres
+ public | department  | table | postgres
+ public | department1 | table | postgres
+(7 rows)
+
+library=# create table test(
+library(# id int,
+library(# date date);
+CREATE TABLE
+library=# insert into test values(1,'08-05-1995');
+INSERT 0 1
+library=# select * from test
+library-# ;
+ id |    date    
+----+------------
+  1 | 1995-08-05
+(1 row)
+
+library=# create database librarym;
+CREATE DATABASE
+library=# \c librarym
+You are now connected to database "librarym" as user "postgres".
+librarym=# create table member(
+librarym(# id int primary key,
+librarym(# name varchar(20),
+librarym(# age int ,
+librarym(# phone varchar(13),
+librarym(# n_issueable int,
+librarym(# n_issued int);
+CREATE TABLE
+librarym=# create table book_details(
+librarym(# id int primary key,
+librarym(# title varchar(20),
+librarym(# author varchar(
+librarym(# ;
+librarym(# );
+librarym(# 
+librarym(# 
+librarym(# 
+librarym(# 
+librarym(# 
+librarym(# 
+librarym(# 
+librarym(# ));
+ERROR:  syntax error at or near ";"
+LINE 5: ;
+        ^
+librarym=# create table book_details(
+id int primary key,
+title varchar(50),
+librarym(# author varchar(50),
+librarym(# pub_year char(4),
+librarym(# no_copies int,
+librarym(# no_available int check(no_available<=no_copies),
+librarym(# shelf_id );
+ERROR:  syntax error at or near ")"
+LINE 8: shelf_id );
+                 ^
+librarym=# create table shelf(
+librarym(# id int primary key,
+librarym(# floor int );
+CREATE TABLE
+librarym=# create table book_details(
+id int primary key,
+title varchar(50),
+author varchar(50),
+pub_year char(4),
+no_copies int,
+no_available int check(no_available<=no_copies),
+shelf_id int references shelf(id));
+CREATE TABLE
+librarym=# create table borrow(
+librarym(# mem_id int references member(id),
+librarym(# book_id int references book_details(id),
+librarym(# date_of_issue date,
+librarym(# date_of_return date);
+CREATE TABLE
+librarym=# create table member(
+id int primary key,
+name varchar(20),
+age int ,    
+phone varchar(13),
+n_issueable int,
+n_issued int);
+ERROR:  relation "member" already exists
+librarym=# 
+librarym=# insert into member(1,'muzammil',22,'8802868625',2,0);
+ERROR:  syntax error at or near "1"
+LINE 1: insert into member(1,'muzammil',22,'8802868625',2,0);
+                           ^
+librarym=# insert into member values(1,'muzammil',22,'8802868625',2,0);
+INSERT 0 1
+librarym=# insert into member values(2,'apal',22,'1495784512',2,1);
+INSERT 0 1
+librarym=# insert into member values(3,'moto',45,'1426784512',2,2);
+INSERT 0 1
+librarym=# insert into member values(4,'garima',25,'1452654875',2,0);
+INSERT 0 1
+librarym=# insert into member values(5,'abcd',56,'1452654875',2,1);
+INSERT 0 1
+librarym=# insert into book_details values(1,'let us c','someone','1995',5,3);
+INSERT 0 1
+librarym=# insert into book_details values(2,'head first java','ketthy sierra','2016',5,4);
+INSERT 0 1
+librarym=# insert into book_details values(3,'yellow wallpaper','muzm','1998',8,7);
+INSERT 0 1
+librarym=# insert into book_details values(4,'boring book','muzm','1998',8,7);
+librarym=# delete from book_details where id=4;
+DELETE 0
+librarym=# select * from book details;
+ERROR:  relation "book" does not exist
+LINE 1: select * from book details;
+                      ^
+librarym=# select * from book_details;
+
+[1]+  Stopped                 psql
+postgres@namit:~$ psql
+psql (9.6.3)
+Type "help" for help.
+
+postgres=# \c librarym
+You are now connected to database "librarym" as user "postgres".
+librarym=# insert into book_details values(4,'boring book','abcd','2156',8,8);
+INSERT 0 1
+librarym=# select * from book details
+librarym-# ;
+ERROR:  relation "book" does not exist
+LINE 1: select * from book details
+                      ^
+librarym=# select * from book_details
+;
+librarym=# 
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued 
+----+----------+-----+------------+-------------+----------
+  1 | muzammil |  22 | 8802868625 |           2 |        0
+  2 | apal     |  22 | 1495784512 |           2 |        1
+  3 | moto     |  45 | 1426784512 |           2 |        2
+  4 | garima   |  25 | 1452654875 |           2 |        0
+  5 | abcd     |  56 | 1452654875 |           2 |        1
+(5 rows)
+
+librarym=# select * from book_details;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |         
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |         
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |         
+  4 | boring book      | abcd          | 2156     |         8 |            8 |         
+(4 rows)
+
+librarym=# insert into borrow values(1,1,'08-05-1995','08-06-1996');
+INSERT 0 1
+librarym=# insert into borrow values(5,1,'08-05-2017','08-06-2017');
+INSERT 0 1
+librarym=# insert into borrow values(3,2,'14-05-2017');
+ERROR:  date/time field value out of range: "14-05-2017"
+LINE 1: insert into borrow values(3,2,'14-05-2017');
+                                      ^
+HINT:  Perhaps you need a different "datestyle" setting.
+librarym=# insert into borrow values(3,2,'14-05-2017'.null);
+ERROR:  syntax error at or near "."
+LINE 1: insert into borrow values(3,2,'14-05-2017'.null);
+                                                  ^
+librarym=# insert into borrow values(3,2,'14-05-2017', null);
+ERROR:  date/time field value out of range: "14-05-2017"
+LINE 1: insert into borrow values(3,2,'14-05-2017', null);
+                                      ^
+HINT:  Perhaps you need a different "datestyle" setting.
+librarym=# insert into borrow values(3,2,'2017-05-08', null);
+INSERT 0 1
+librarym=# insert into borrow values(3,3,'2017-05-08', null);
+INSERT 0 1
+librarym=# select * from borrow;
+ mem_id | book_id | date_of_issue | date_of_return 
+--------+---------+---------------+----------------
+      1 |       1 | 1995-08-05    | 1996-08-06
+      5 |       1 | 2017-08-05    | 2017-08-06
+      3 |       2 | 2017-05-08    | 
+      3 |       3 | 2017-05-08    | 
+(4 rows)
+
+librarym=# alter table member
+librarym-# ;
+ERROR:  syntax error at or near ";"
+LINE 2: ;
+        ^
+librarym=# alter table member
+librarym-# ;
+ERROR:  syntax error at or near ";"
+LINE 2: ;
+        ^
+librarym=# create table department(
+librarym(# id int primary key,
+librarym(# name varchar(50);
+librarym(# ;
+librarym(# );
+ERROR:  syntax error at or near ";"
+LINE 3: name varchar(50);
+                        ^
+librarym=# create table department(
+id int primary key,
+name varchar(50));
+CREATE TABLE
+librarym=# alter table member
+librarym-# add column dept_id references department(id);\
+ERROR:  syntax error at or near "references"
+LINE 2: add column dept_id references department(id);
+                           ^
+Invalid command \. Try \? for help.
+librarym=# alter table member
+add column dept_id int references department(id);
+ALTER TABLE
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |        
+  2 | apal     |  22 | 1495784512 |           2 |        1 |        
+  3 | moto     |  45 | 1426784512 |           2 |        2 |        
+  4 | garima   |  25 | 1452654875 |           2 |        0 |        
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |        
+(5 rows)
+
+librarym=# alter table member
+add constraint default(dept_id) 1;
+ERROR:  syntax error at or near "default"
+LINE 2: add constraint default(dept_id) 1;
+                       ^
+librarym=# alter table member
+alter column dept_id set default 1;
+ALTER TABLE
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |        
+  2 | apal     |  22 | 1495784512 |           2 |        1 |        
+  3 | moto     |  45 | 1426784512 |           2 |        2 |        
+  4 | garima   |  25 | 1452654875 |           2 |        0 |        
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |        
+(5 rows)
+
+librarym=# update dept_id=1 from member where dept_id=null;
+ERROR:  syntax error at or near "="
+LINE 1: update dept_id=1 from member where dept_id=null;
+                      ^
+librarym=# update member 
+librarym-# set dept_id=1 where dept_id=null;
+UPDATE 0
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |        
+  2 | apal     |  22 | 1495784512 |           2 |        1 |        
+  3 | moto     |  45 | 1426784512 |           2 |        2 |        
+  4 | garima   |  25 | 1452654875 |           2 |        0 |        
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |        
+(5 rows)
+
+librarym=# update member                                   
+set dept_id=1 ;
+ERROR:  insert or update on table "member" violates foreign key constraint "member_dept_id_fkey"
+DETAIL:  Key (dept_id)=(1) is not present in table "department".
+librarym=# insert into department values(1,'miscellaneous');
+INSERT 0 1
+librarym=# update member                                    
+set dept_id=1 ;
+UPDATE 5
+librarym=# select * from member;                            
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |       1
+  2 | apal     |  22 | 1495784512 |           2 |        1 |       1
+  3 | moto     |  45 | 1426784512 |           2 |        2 |       1
+  4 | garima   |  25 | 1452654875 |           2 |        0 |       1
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |       1
+(5 rows)
+
+librarym=# select m.name,m.age,d.name from member as m, department as d inner join m.dept_id=d.id;
+ERROR:  syntax error at or near "="
+LINE 1: ...from member as m, department as d inner join m.dept_id=d.id;
+                                                                 ^
+librarym=# select m.name,m.age,d.name from member as m, department as d inner join on  m.dept_id=d.id;
+ERROR:  syntax error at or near "on"
+LINE 1: ...name from member as m, department as d inner join on  m.dept...
+                                                             ^
+librarym=# select name,age from member  inner join department on member.dept_id=department.id;
+ERROR:  column reference "name" is ambiguous
+LINE 1: select name,age from member  inner join department on member...
+               ^
+librarym=# select member.name,age from member  inner join department on member.dept_id=department.id;
+   name   | age 
+----------+-----
+ muzammil |  22
+ apal     |  22
+ moto     |  45
+ garima   |  25
+ abcd     |  56
+(5 rows)
+
+librarym=# select member.name,age,department.name from member  inner join department on member.dept_id=department.id;
+   name   | age |     name      
+----------+-----+---------------
+ muzammil |  22 | miscellaneous
+ apal     |  22 | miscellaneous
+ moto     |  45 | miscellaneous
+ garima   |  25 | miscellaneous
+ abcd     |  56 | miscellaneous
+(5 rows)
+
+librarym=# insert into department values(2,'medicine');
+INSERT 0 1
+librarym=# insert into department values(3,'engineering');
+INSERT 0 1
+librarym=# insert into department values(4,'literature');
+INSERT 0 1
+librarym=# insert into department values(5,'Accounts');
+INSERT 0 1
+librarym=# update member set dept_id=2 where id=3;
+UPDATE 1
+librarym=# update member set dept_id=3 where id=2;
+UPDATE 1
+librarym=# update member set dept_id=4 where id=1;
+UPDATE 1
+librarym=# select member.name,age,department.name from member  inner join department on member.dept_id=department.id;
+   name   | age |     name      
+----------+-----+---------------
+ garima   |  25 | miscellaneous
+ abcd     |  56 | miscellaneous
+ moto     |  45 | medicine
+ apal     |  22 | engineering
+ muzammil |  22 | literature
+(5 rows)
+
+librarym=# update member set dept_id=3 where id=1;
+UPDATE 1
+librarym=# update member set dept_id=4 where id=1;
+UPDATE 1
+librarym=# select member.name,age,department.name from member  inner join department on member.dept_id=department.id;
+   name   | age |     name      
+----------+-----+---------------
+ garima   |  25 | miscellaneous
+ abcd     |  56 | miscellaneous
+ moto     |  45 | medicine
+ apal     |  22 | engineering
+ muzammil |  22 | literature
+(5 rows)
+
+librarym=# update member set dept_id=4 where id=5;
+UPDATE 1
+librarym=# select member.name,age,department.name from member  inner join department on member.dept_id=department.id;
+   name   | age |     name      
+----------+-----+---------------
+ garima   |  25 | miscellaneous
+ moto     |  45 | medicine
+ apal     |  22 | engineering
+ muzammil |  22 | literature
+ abcd     |  56 | literature
+(5 rows)
+
+librarym=# select * from member
+librarym-# ;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  4 | garima   |  25 | 1452654875 |           2 |        0 |       1
+  3 | moto     |  45 | 1426784512 |           2 |        2 |       2
+  2 | apal     |  22 | 1495784512 |           2 |        1 |       3
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |       4
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |       4
+(5 rows)
+
+librarym=# select m.name,b.title,date_of_issue from borrow 
+librarym-# innner join member as m on borrow.mem_id=member.id
+librarym-# inner;
+ERROR:  syntax error at or near ";"
+LINE 3: inner;
+             ^
+librarym=# select m.name,b.title,date_of_issue from borrow 
+inner join member as m on borrow.mem_id=member.id
+inner join book_details as b on borrow.book_id=book_details.id;
+ERROR:  invalid reference to FROM-clause entry for table "member"
+LINE 2: inner join member as m on borrow.mem_id=member.id
+                                                ^
+HINT:  Perhaps you meant to reference the table alias "m".
+librarym=# select member.name,book_details.title,date_of_issue from borrow 
+inner join member on borrow.mem_id=member.id
+inner join book_details on borrow.book_id=book_details.id;
+   name   |      title       | date_of_issue 
+----------+------------------+---------------
+ muzammil | let us c         | 1995-08-05
+ abcd     | let us c         | 2017-08-05
+ moto     | head first java  | 2017-05-08
+ moto     | yellow wallpaper | 2017-05-08
+(4 rows)
+
+librarym=# select * from book_details
+librarym-# ;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |         
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |         
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |         
+  4 | boring book      | abcd          | 2156     |         8 |            8 |         
+(4 rows)
+
+librarym=# insert into shelf values(1,23);
+INSERT 0 1
+librarym=# insert into shelf values(2,5);
+INSERT 0 1
+librarym=# insert into shelf values(3,0);
+INSERT 0 1
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  4 | garima   |  25 | 1452654875 |           2 |        0 |       1
+  3 | moto     |  45 | 1426784512 |           2 |        2 |       2
+  2 | apal     |  22 | 1495784512 |           2 |        1 |       3
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |       4
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |       4
+(5 rows)
+
+librarym=# select * from book_details;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |         
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |         
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |         
+  4 | boring book      | abcd          | 2156     |         8 |            8 |         
+(4 rows)
+
+librarym=# select * from shelf;
+ id | floor 
+----+-------
+  1 |    23
+  2 |     5
+  3 |     0
+(3 rows)
+
+librarym=# select * from department;
+ id |     name      
+----+---------------
+  1 | miscellaneous
+  2 | medicine
+  3 | engineering
+  4 | literature
+  5 | Accounts
+(5 rows)
+
+librarym=# select * from department;
+ id |     name      
+----+---------------
+  1 | miscellaneous
+  2 | medicine
+  3 | engineering
+  4 | literature
+  5 | Accounts
+(5 rows)
+
+librarym=# select * from book_details;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |         
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |         
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |         
+  4 | boring book      | abcd          | 2156     |         8 |            8 |         
+(4 rows)
+
+librarym=# update book_details set shelf_id=1;
+UPDATE 4
+librarym=# select * from book_details;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |        1
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |        1
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |        1
+  4 | boring book      | abcd          | 2156     |         8 |            8 |        1
+(4 rows)
+
+librarym=# select b.title,b.author ,s.floor from book_details as b inner join shelf as s on b.shelf_id=s.id;
+      title       |    author     | floor 
+------------------+---------------+-------
+ let us c         | someone       |    23
+ head first java  | ketthy sierra |    23
+ yellow wallpaper | muzm          |    23
+ boring book      | abcd          |    23
+(4 rows)
+
+librarym=# select member.name,book_details.title,date_of_issue from borrow 
+inner join member on borrow.mem_id=member.id
+inner join book_details on borrow.book_id=book_details.id;
+   name   |      title       | date_of_issue 
+----------+------------------+---------------
+ muzammil | let us c         | 1995-08-05
+ abcd     | let us c         | 2017-08-05
+ moto     | head first java  | 2017-05-08
+ moto     | yellow wallpaper | 2017-05-08
+(4 rows)
+
+librarym=# select b.title,b.author ,s.floor from book_details as b inner join shelf as s on b.shelf_id=s.id;
+      title       |    author     | floor 
+------------------+---------------+-------
+ let us c         | someone       |    23
+ head first java  | ketthy sierra |    23
+ yellow wallpaper | muzm          |    23
+ boring book      | abcd          |    23
+(4 rows)
+
+librarym=# select member.name,book_details.title,date_of_issue from borrow 
+inner join member on borrow.mem_id=member.id
+inner join book_details on borrow.book_id=book_details.id;
+   name   |      title       | date_of_issue 
+----------+------------------+---------------
+ muzammil | let us c         | 1995-08-05
+ abcd     | let us c         | 2017-08-05
+ moto     | head first java  | 2017-05-08
+ moto     | yellow wallpaper | 2017-05-08
+(4 rows)
+
+librarym=# select m.name,b.title,date_of_issue from borrow 
+inner join member as m on borrow.mem_id=member.id
+inner join book_details as b on borrow.book_id=book_details.id;
+ERROR:  invalid reference to FROM-clause entry for table "member"
+LINE 2: inner join member as m on borrow.mem_id=member.id
+                                                ^
+HINT:  Perhaps you meant to reference the table alias "m".
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  4 | garima   |  25 | 1452654875 |           2 |        0 |       1
+  3 | moto     |  45 | 1426784512 |           2 |        2 |       2
+  2 | apal     |  22 | 1495784512 |           2 |        1 |       3
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |       4
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |       4
+(5 rows)
+
+librarym=# select * from book_details;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id 
+----+------------------+---------------+----------+-----------+--------------+----------
+  1 | let us c         | someone       | 1995     |         5 |            3 |        1
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |        1
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |        1
+  4 | boring book      | abcd          | 2156     |         8 |            8 |        1
+(4 rows)
+
+librarym=# select * from borrow;
+ mem_id | book_id | date_of_issue | date_of_return 
+--------+---------+---------------+----------------
+      1 |       1 | 1995-08-05    | 1996-08-06
+      5 |       1 | 2017-08-05    | 2017-08-06
+      3 |       2 | 2017-05-08    | 
+      3 |       3 | 2017-05-08    | 
+(4 rows)
+
+librarym=# select * from departmnet
+librarym-# ;
+ERROR:  relation "departmnet" does not exist
+LINE 1: select * from departmnet
+                      ^
+librarym=# select * from department
+;;
+ id |     name      
+----+---------------
+  1 | miscellaneous
+  2 | medicine
+  3 | engineering
+  4 | literature
+  5 | Accounts
+(5 rows)
+
+librarym=# select * from shelf;
+ id | floor 
+----+-------
+  1 |    23
+  2 |     5
+  3 |     0
+(3 rows)
+
+librarym=# select * from members;
+ERROR:  relation "members" does not exist
+LINE 1: select * from members;
+                      ^
+librarym=# select * from member;
+ id |   name   | age |   phone    | n_issueable | n_issued | dept_id 
+----+----------+-----+------------+-------------+----------+---------
+  4 | garima   |  25 | 1452654875 |           2 |        0 |       1
+  3 | moto     |  45 | 1426784512 |           2 |        2 |       2
+  2 | apal     |  22 | 1495784512 |           2 |        1 |       3
+  1 | muzammil |  22 | 8802868625 |           2 |        0 |       4
+  5 | abcd     |  56 | 1452654875 |           2 |        1 |       4
+(5 rows)
+
+librarym=# select * from borrow as b 
+librarym-# join book_details as bk on b.book_id=bk.id  
+librarym-# join member as m on b.mem_id=m.id;
+
+[2]+  Stopped                 psql
+postgres@namit:~$ psql
+psql (9.6.3)
+Type "help" for help.
+
+postgres=# \c librarym
+You are now connected to database "librarym" as user "postgres".
+librarym=# alter table book_details 
+librarym-# ;
+ERROR:  syntax error at or near ";"
+LINE 2: ;
+        ^
+librarym=# create table category(
+librarym(# id int primary key,
+librarym(# name varchar(50),
+librarym(# );
+ERROR:  syntax error at or near ")"
+LINE 4: );
+        ^
+librarym=# create table category(
+id int primary key,
+name varchar(50) 
+);
+CREATE TABLE
+librarym=# alter table book_details 
+add column cat_id references category(id);
+ERROR:  syntax error at or near "references"
+LINE 2: add column cat_id references category(id);
+                          ^
+librarym=# alter table book_details 
+add column cat_id int references category(id);
+ALTER TABLE
+librarym=# insert into category values(1,"Computer science");
+ERROR:  column "Computer science" does not exist
+LINE 1: insert into category values(1,"Computer science");
+                                      ^
+librarym=# insert into category values(1,'Computer science');
+INSERT 0 1
+librarym=# insert into category values(1,'novels');
+ERROR:  duplicate key value violates unique constraint "category_pkey"
+DETAIL:  Key (id)=(1) already exists.
+librarym=# insert into category values(2,'novels');
+INSERT 0 1
+librarym=# insert into category values(3,'electronics');
+INSERT 0 1
+librarym=# update table category set cat_id=1 where title like 'hea%';
+ERROR:  syntax error at or near "table"
+LINE 1: update table category set cat_id=1 where title like 'hea%';
+               ^
+librarym=# update book_details  set cat_id=1 where title like 'hea%';
+UPDATE 1
+librarym=# update book_details  set cat_id=2 where title like 'ye%';
+UPDATE 1
+librarym=# update book_details  set cat_id=2 where cat_id is null;
+UPDATE 2
+librarym=# ^C
+librarym=# select # from book_details as b left outer join category on b.cat_id=category.id;
+ERROR:  syntax error at or near "from"
+LINE 1: select # from book_details as b left outer join category on ...
+                 ^
+librarym=# select * from book_details as b left outer join category on b.cat_id=category.id;
+ id |      title       |    author     | pub_year | no_copies | no_available | shelf_id | cat_id | id |       name       
+----+------------------+---------------+----------+-----------+--------------+----------+--------+----+------------------
+  2 | head first java  | ketthy sierra | 2016     |         5 |            4 |        1 |      1 |  1 | Computer science
+  3 | yellow wallpaper | muzm          | 1998     |         8 |            7 |        1 |      2 |  2 | novels
+  1 | let us c         | someone       | 1995     |         5 |            3 |        1 |      2 |  2 | novels
+  4 | boring book      | abcd          | 2156     |         8 |            8 |        1 |      2 |  2 | novels
+(4 rows)
+
+librarym=# select title,author,pub_year,category.name as cat from book_details as b left outer join category on b.cat_id=category.id;
+      title       |    author     | pub_year |       cat        
+------------------+---------------+----------+------------------
+ head first java  | ketthy sierra | 2016     | Computer science
+ yellow wallpaper | muzm          | 1998     | novels
+ let us c         | someone       | 1995     | novels
+ boring book      | abcd          | 2156     | novels
+(4 rows)
+
+librarym=# select m.id,m.name, m.phone,b.title,b.author, from member inner join borrow as br on br.mem_id=m.id;
+ERROR:  syntax error at or near "from"
+LINE 1: select m.id,m.name, m.phone,b.title,b.author, from member in...
+                                                      ^
+librarym=# select m.id,m.name, m.phone,b.title,b.author, from member as m  inner join borrow as br on br.mem_id=m.id;
+ERROR:  syntax error at or near "from"
+LINE 1: select m.id,m.name, m.phone,b.title,b.author, from member as...
+                                                      ^
+librarym=# select m.id,m.name, m.phone,b.title,b.author  from member as m  inner join borrow as br on br.mem_id=m.id;
+ERROR:  missing FROM-clause entry for table "b"
+LINE 1: select m.id,m.name, m.phone,b.title,b.author  from member as...
+                                    ^
+librarym=# select m.id,m.name, m.phone, b.title, b.author  from member as m  inner join borrow as br on br.mem_id=m.id join book_details as b ;
+ERROR:  syntax error at or near ";"
+LINE 1: ...join borrow as br on br.mem_id=m.id join book_details as b ;
+                                                                      ^
+librarym=# select m.id,m.name, m.phone, b.title, b.author  from member as m  inner join borrow as br on br.mem_id=m.id join book_details as b on b.id=br.id;
+ERROR:  column br.id does not exist
+LINE 1: ...s br on br.mem_id=m.id join book_details as b on b.id=br.id;
+                                                                 ^
+HINT:  Perhaps you meant to reference the column "b.id".
+librarym=# select m.id,m.name, m.phone, b.title, b.author  from member as m  inner join borrow as br on br.mem_id=m.id join book_details as b on b.id=br.book_id;
+ id |   name   |   phone    |      title       |    author     
+----+----------+------------+------------------+---------------
+  1 | muzammil | 8802868625 | let us c         | someone
+  5 | abcd     | 1452654875 | let us c         | someone
+  3 | moto     | 1426784512 | head first java  | ketthy sierra
+  3 | moto     | 1426784512 | yellow wallpaper | muzm
+(4 rows)
+
+librarym=#  
 
 
