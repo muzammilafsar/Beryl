@@ -1,0 +1,194 @@
+insert into employees values (500,'Muzammil',8000);
+
+insert into employees values (501,'Mayank',50000);
+
+insert into employees values (503,'Random Guy',80000);
+
+insert into employees values (504,'Sumit',40000);
+
+insert into employees values (505,'Shan',62000);
+
+insert into employees values (506,'paul',35000);
+
+insert into employees values (507,'vishal',3000);
+
+insert into employees values (508,'John Carter',100000);
+
+insert into employees values (500,'Muzammil',8000);
+
+insert into employees values (501,'Mayank',50000);
+
+insert into employees values (503,'Random Guy',80000);
+
+insert into employees values (504,'Sumit',40000);
+
+insert into employees values (504,'Shan',62000);
+
+insert into employees values (505,'Shan',62000);
+
+insert into employees values (506,'paul',35000);
+
+
+
+airline=# select * from employees;
+ eid |    ename    | salary 
+-----+-------------+--------
+ 500 | Muzammil    |   8000
+ 501 | Mayank      |  50000
+ 506 | paul        |  35000
+ 507 | vishal      |   3000
+ 505 | Shan        | 180000
+ 503 | Random Guy  | 120000
+ 508 | John Carter | 110000
+ 504 | Sumit       | 120000
+(8 rows)
+
+
+
+airline=# select * from employees;
+ eid |    ename    | salary 
+-----+-------------+--------
+ 500 | Muzammil    |   8000
+ 501 | Mayank      |  50000
+ 506 | paul        |  35000
+ 507 | vishal      |   3000
+ 505 | Shan        | 180000
+ 503 | Random Guy  | 120000
+ 508 | John Carter | 110000
+ 504 | Sumit       | 120000
+(8 rows)
+
+
+
+
+
+airline=# select * from flights ;
+  flno  |    from_    |   to_    | distance | departs  | arrives  | price 
+--------+-------------+----------+----------+----------+----------+-------
+    101 | Los Angeles | chicago  |     2000 | 06:30:00 | 12:30:00 | 10000
+    102 | Delhi       | Dubai    |     2000 | 16:00:00 | 18:30:00 |  5000
+    103 | New York    | Dubai    |     1000 | 13:00:00 | 18:30:00 | 50000
+    104 | London      | Mumbai   |     8000 | 07:00:00 | 18:30:00 | 98712
+    105 | Delhi       | Chennai  |     1200 | 04:00:00 | 05:00:00 |  2000
+    106 | Faridabad   | Delhi    |       40 | 08:00:00 | 08:30:00 |   200
+    107 | Los Angeles | Honolulu |     5000 | 06:30:00 | 08:30:00 |  6000
+ 123451 | Madison     | Delhi    |     1000 | 18:00:00 | 20:22:00 | 45612
+ 123455 | Delhi       | New York |     2000 | 18:00:00 | 05:00:00 | 45612
+  11523 | Madison     | Mumbai   |     1300 | 12:23:00 | 14:34:00 | 12000
+  11524 | Mumbai      | New York |     1500 | 13:23:00 | 17:34:00 | 12000
+(11 rows)
+
+
+
+airline=# select * from certified;
+ eid |  aid  
+-----+-------
+ 501 | 12345
+ 501 | 12346
+ 501 | 12349
+ 506 | 12348
+ 507 | 12350
+ 504 | 12350
+ 504 | 12347
+ 504 | 12349
+ 507 | 12350
+ 508 | 12348
+(10 rows)
+
+
+
+
+
+#################################################################################################
+a.
+select distinct ename from employees inner join certified on employees.eid=certified.eid;
+    ename    
+-------------
+ John Carter
+ vishal
+ paul
+ Sumit
+ Mayank
+(5 rows)
+################################################################################################
+b.
+with abc as(select eid,count(*) from certified group by eid having count(*)>2)select abc.eid,max(a.cruisingrange) from abc inner join certified on abc.eid=certified.eid join aircraft as a on certified.aid =a.aid group by(abc.eid);
+
+ eid |  max  
+-----+-------
+ 504 |  6000
+ 501 | 10000
+(2 rows)
+
+
+#################################################################################################
+
+c.
+select e.ename from employees as e inner join certified as c on e.eid=c.eid where e.salary<(select min(price) from flights where from_='Los Angeles' and to_='Honolulu' ) group by e.ename;
+
+
+
+####################################################################################################
+
+d.
+with abc as(select * from aircraft where cruisingrange>1000 )select a.aname,avg(e.salary) from abc as a inner join certified as c on c.aid=a.aid join employees as e on e.eid=c.eid group by a.aname;
+
+
+##################################################################################################
+e.
+
+with abc as(select * from aircraft where cruisingrange>1000 )select a.aname,avg(e.salary) from abc as a inner join certified as c on c.aid=a.aid join employees as e on e.eid=c.eid group by a.aname;
+
+################################################################################################
+f.
+
+select a.aid from aircraft as  a  where cruisingrange>=(select distance from flights where to_='Chicago' and from_='Los Angeles');
+
+###################################################################################################
+g.
+
+select * from flights where distance>=(select min(a.cruisingrange) from employees as e join certified as c on c.eid=e.eid join aircraft as a on a.aid=c.aid where e.salary>100000);
+
+##################################################################################################
+h.
+
+select  distinct ename from employees as e inner join certified as c on c.eid=e.eid  inner join aircraft as a on c.eid=e.eid where a.cruisingrange>3000 and a.aname not like 'Boeing%';
+
+###################################################################################################
+i
+
+ with abc as(select * from flights as f where f.from_='Madison')
+, xyz as(select * from flights as f where f.to_='New York') 
+, ab as (select a.flno,a.departs,a.arrives, a.from_ as a,a.to_ as b,x.departs,x.arrives as farrives,x.flno,x.from_ as c,x.to_ as d  from xyz as x cross join abc as a)
+select * from ab where b=c and farrives <='18:00';
+
+
+
+
+####################################################################################################
+j.
+
+ select avg(e.salary)-(select avg(salary) from employees) from employees as e  where e.eid in (select distinct eid from certified );
+
+##########################################################################################################
+k.
+
+with abc as (select e.eid, e.salary from employees as e where e.eid not in (select distinct eid from certified))
+select * from abc as a where a.salary>(select avg(e.salary) from employees as e  where e.eid in (select distinct eid from certified ));
+
+#############################################################################################################
+l.
+
+select e.ename,min(a.cruisingrange) from employees as e join certified as c on c.eid=e.eid join aircraft as a on a.aid=c.aid where a.cruisingrange>1000 group by e.ename;
+###############################################################################################################
+m.
+
+with abc as (select e.ename, min(a.cruisingrange), count(e.ename) from employees as e join certified as c on c.eid=e.eid join aircraft as a on a.aid=c.aid where a.cruisingrange>1000 group by e.ename )
+select * from abc where count>1;
+
+############################################################################################################
+n.
+
+with abc as (select e.ename, min(a.cruisingrange) from employees as e join certified as c on c.eid=e.eid join aircraft as a on a.aid=c.aid where a.cruisingrange>1000 and a.aname like 'Boeing%' group by e.ename )
+select ename from abc ;
+

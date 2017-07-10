@@ -147,6 +147,3 @@ SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
 ########################################################################
 select * from company1 where ID in (select id from company1 where salary>=30000);
 
-with abc as(select eid,count(*) from certified group by eid having count(*)>2)select abc.eid,a.cruisingrange from abc inner join certified on abc.eid=certified.eid join aircraft as a on certified.aid =a.aid;
-
-
