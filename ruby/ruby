@@ -1,0 +1,78 @@
+h=Hash.new("go fish") #default value go fish
+z=Hash["a",100,"b",200]
+Hash.try_convert(a:2)
+
+2.3.0 :016 > book={
+2.3.0 :017 >     }
+ => {} 
+2.3.0 :018 > book[:potter]=500
+ => 500 
+2.3.0 :019 > book
+ => {:potter=>500} 
+2.3.0 :020 > book[:harry]=700
+
+2.3.0 :016 > book={
+2.3.0 :017 >     }
+ => {} 
+2.3.0 :018 > book[:potter]=500
+ => 500 
+2.3.0 :019 > book
+ => {:potter=>500} 
+2.3.0 :020 > book[:harry]=700
+c.default=0
+c.store("a",50)
+h.key(100)
+h.assoc("a")
+h.clear 
+h.each {|key, value| puts "#{key} is #{value}" }
+h.each_key {|key| puts key }
+h.each_value {|value| puts value }
+h.has_key?("a")
+h.flatten
+h.has_value?(100)
+h.to_s
+h.invert
+h.key(200) 
+a.keys
+h.reject {|k,v| v > 100}
+h.merge(a)
+h.replace({ "c" => 300, "d" => 400 })	\
+h.select {|k,v| v < 200}
+
+
+a=String.new('abc")
+a*10
+"i am "+"Muzammil"
+
+a="hello"
+a<<"world" //concatenate string
+
+"abcdef" <=> "abcde"     #=> 1
+"abcdef" <=> "abcdef"    #=> 0
+"abcdef" <=> "abcdefg"   #=> -1
+"abcdef" <=> "ABCDEF"    #=> 1
+a[2]="123"
+a.capitalize
+a.center(50)
+"hello\n\r".chomp
+a.clear
+a.count	a.delete("a")
+a.downcase
+a.empty?
+a..insert(0, 'X')
+"  hello  ".lstrip  //"hello"
+"hello".partition("l") 
+a = "world"
+a.prepend("hello ")
+a.reverse
+"hello".rindex('e') //return index
+"yellow moon".squeeze                  #=> "yelow mon"
+"hello".start_with?("hell") 
+"hello".swapcase
+
+"hello".gsub(/([aeiou])/, '*\1*') 
+"hello".gsub(/[aeiou]/, '*') 
+
+
+
+
