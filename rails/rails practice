@@ -1,0 +1,50 @@
+Here are all the Rails 4 (ActiveRecord migration) datatypes:
+
+    :binary
+    :boolean
+    :date
+    :datetime
+    :decimal
+    :float
+    :integer
+    :bigint
+    :primary_key
+    :references
+    :string
+    :text
+    :time
+    :timestamp
+
+
+rails new library_management_system -d postgresql
+rails generate model book
+rake db:create
+rails db:migrate
+rails generate migration RemoveShelf_idFromBooks shelf_id:integer
+rails generate migration AddShelf_idFromBooks shelf_id:integer
+
+a=Book.find(1)# search for primary key
+a=Book.find(1,2,5)
+a=Book.all
+a=Book.first
+a=Book.first(4)#return first 4 records
+a=Book.last
+a=Book.last(3)
+a=Book.order(:title).last
+Book.find_by title: "yellow wallpaper"
+Book.find_by! title: "yellow wallpaper" raise an error if not found
+Book.where("author=?",'me')
+Book.where("author='me' AND title='yellow wallpaper'")
+Book.order(created_at: :desc)
+Book.select("*")
+Book.select('title,author')
+Book.limit(1)
+Book.limit(1).offset(5)
+
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+
+rder.select("date(created_at) as ordered_date, sum(price) as total_price").
+  group("date(created_at)").having("sum(price) > ?", 100)
+
+z.errors.messages
+
