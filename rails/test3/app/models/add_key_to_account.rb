@@ -1,0 +1,2 @@
+class AddKeyToAccount < ApplicationRecord
+end
