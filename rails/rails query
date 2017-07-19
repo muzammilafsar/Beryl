@@ -1,0 +1,78 @@
+b=Book.first
+b=Book.find(1)
+Book.find_by title:'chamber of secrets'
+
+Book.all.each do |book|
+2.3.0 :008 >     print book.title
+2.3.0 :009?>   end
+
+
+2.3.0 :013 > Book.find_each(batch_size: 2) do |book|
+2.3.0 :014 >     puts book.title
+2.3.0 :015?>   end
+
+2.3.0 :019 > Book.find_each(start: 2) do |book|
+2.3.0 :020 >     puts book.title
+2.3.0 :021?>   end
+
+2.3.0 :039 > Book.find_in_batches do |book|
+2.3.0 :040 >     puts book[0]
+2.3.0 :041?>   end
+
+2.3.0 :029 >   Book.find_each(start: 2 , finish: 4) do |book|
+2.3.0 :030 >     puts book.title
+2.3.0 :031?>   end
+
+
+Book.where('id = ?',2) #with parameters
+
+ Book.where(shelf_id: 6)#with hash
+
+
+Book.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
+
+Client.where.not(locked: true)
+
+Book.where("title LIKE ?",'chamber%')
+
+Book.where("title LIKE ?",'chamber%').or(Book.where(id:4))
+
+a=Book.first
+a.borrows
+a.borrows[0].member
+
+Book.order(:title,:created_at)
+
+Member.select(:name).distinct
+Member.select(:name).distinct.count
+
+
+Book.limit(2)
+Book.limit(2).offset(3)  #offset skip first 3
+
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+
+
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").
+  group("date(created_at)").having("sum(price) > ?", 100)
+
+Book.where('id>5').limit(3).unscope(:where)
+
+Book.where('id > 2').limit(3).only(:where)
+
+Member.order(:name).reverse_order
+
+
+Member.where(id:1).rewhere(id:2) #overides first where
+
+
+Book.joins("INNER JOIN borrows ON borrows.book_id=books.id")
+
+Borrow.includes(:member,:book)
+
+ a=Book.find_or_create_by(title: 'Abc', shelf_id:4)
+
+Book.find_by_sql("select * from books where title like 'yellow%'")
+
+
+b=Borrow.joins(:member).joins(:book).select("members.id,members.name").group('members.name').count('books.id')

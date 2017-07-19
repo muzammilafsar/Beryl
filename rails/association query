@@ -1,0 +1,32 @@
+m=Member.first
+b=Book.last
+m.books << b
+m.books.delete(b)
+m.books.size
+m.books.where(title: "yellow wallpaper"
+b=m.books.create([{title:"new_book",author:"mayank"}])
+b.books
+b.books.last
+b.books.title
+m.books.find_by(title: "yellow wallpaper")
+
+
+
+
+
+
+
+
+
+
+
+
+
+add_column
+remove_column
+add_index
+add_reference
+add_timestamps
+create_join_table
+
+
